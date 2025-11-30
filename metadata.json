@@ -1,5 +1,5 @@
 {
-  "name": "GovClean Cost Calc",
-  "description": "Calculadora de custos para terceirização de serviços de limpeza na Administração Pública (IN 5/2017 & TCU).",
+  "name": "Planilha de Custos - Estágio de Terceirização",
+  "description": "Calculadora de custos para terceirização de serviços na Administração Pública (IN 5/2017 & TCU).",
   "requestFramePermissions": []
 }

@@ -16,8 +16,8 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => onNavigate('calculator')}>
               <Calculator className="w-8 h-8 text-blue-300" />
               <div>
-                <h1 className="text-xl font-bold leading-none">GovClean Cost Calc</h1>
-                <p className="text-xs text-blue-200 mt-1 opacity-80">Calculadora de Terceirização (IN 5/2017)</p>
+                <h1 className="text-xl font-bold leading-none">Planilha de Custos</h1>
+                <p className="text-xs text-blue-200 mt-1 opacity-80">Estágio de Terceirização (IN 5/2017)</p>
               </div>
             </div>
             
@@ -59,7 +59,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
              <span className="text-xs">Acórdão TCU nº 648/2016</span>
              <span className="text-xs">IN MPOG 05/2017</span>
           </div>
-          <p>© {new Date().getFullYear()} GovClean Calc. Ferramenta auxiliar de cálculo.</p>
+          <p>© {new Date().getFullYear()} Planilha de Custos - Estágio de Terceirização. Ferramenta auxiliar de cálculo.</p>
           <p className="mt-2 text-xs">Os valores de IRPJ e CSLL foram excluídos das composições de custo.</p>
         </div>
       </footer>

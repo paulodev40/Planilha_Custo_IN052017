@@ -43,21 +43,25 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
   };
 
   const RateInput = ({ label, rateKey, desc }: { label: string, rateKey: keyof DetailedRates, desc?: string }) => (
-    <div className="bg-white p-3 rounded border border-slate-200 hover:border-blue-300 transition-colors">
-      <div className="flex justify-between items-center mb-1">
-        <label className="text-xs font-semibold text-slate-700 uppercase tracking-wide">{label}</label>
+    <div className="bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all group">
+      <div className="flex justify-between items-start mb-2">
+        <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">{label}</label>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-2">
         <input
           type="number"
           step="0.0001"
           value={(params.rates[rateKey] * 100).toFixed(4)}
           onChange={(e) => handleRateChange(rateKey, e.target.value)}
-          className="w-24 text-right rounded border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm p-1.5 font-medium"
+          className="w-28 text-right rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base p-2 font-bold text-blue-700 bg-blue-50"
         />
-        <span className="text-slate-500 text-sm font-medium">%</span>
+        <span className="text-slate-500 text-sm font-bold">%</span>
       </div>
-      {desc && <p className="text-[10px] text-slate-400 mt-1 leading-tight">{desc}</p>}
+      {desc && (
+        <div className="mt-2 pt-2 border-t border-slate-100">
+          <p className="text-[10px] text-slate-500 leading-relaxed font-medium">{desc}</p>
+        </div>
+      )}
     </div>
   );
 
@@ -182,8 +186,16 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
                     13º Salário, Férias e Adicional
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <RateInput label="13º Salário" rateKey="m2_1_thirteenth" desc="Provisão mensal (1/12)" />
-                    <RateInput label="Adicional de Férias" rateKey="m2_1_vacationBonus" desc="1/3 Constitucional (ou valor específico)" />
+                    <RateInput 
+                      label="13º Salário" 
+                      rateKey="m2_1_thirteenth" 
+                      desc="Art. 7º, VIII da CF/88 e Lei 4.090/62 - Gratificação natalina de 1/12 da remuneração por mês trabalhado" 
+                    />
+                    <RateInput 
+                      label="Adicional de Férias" 
+                      rateKey="m2_1_vacationBonus" 
+                      desc="Art. 7º, XVII da CF/88 - Adicional de 1/3 (33,33%) sobre a remuneração de férias" 
+                    />
                   </div>
                 </div>
 
@@ -193,14 +205,46 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
                     Encargos Previdenciários (GPS e FGTS)
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <RateInput label="INSS Patronal" rateKey="m2_2_inss" />
-                    <RateInput label="FGTS" rateKey="m2_2_fgts" />
-                    <RateInput label="RAT x FAP" rateKey="m2_2_rat" desc="Risco Acidente Trabalho" />
-                    <RateInput label="Salário Educação" rateKey="m2_2_salary_education" />
-                    <RateInput label="SESC / SESI" rateKey="m2_2_sesc" />
-                    <RateInput label="SENAC / SENAI" rateKey="m2_2_senac" />
-                    <RateInput label="SEBRAE" rateKey="m2_2_sebrae" />
-                    <RateInput label="INCRA" rateKey="m2_2_incra" />
+                    <RateInput 
+                      label="INSS Patronal" 
+                      rateKey="m2_2_inss" 
+                      desc="Art. 22, I da Lei 8.212/91 - Contribuição previdenciária patronal de 20% sobre a folha de pagamento" 
+                    />
+                    <RateInput 
+                      label="FGTS" 
+                      rateKey="m2_2_fgts" 
+                      desc="Art. 15 da Lei 8.036/90 - Depósito mensal de 8% sobre a remuneração do empregado" 
+                    />
+                    <RateInput 
+                      label="RAT x FAP" 
+                      rateKey="m2_2_rat" 
+                      desc="Art. 22, II da Lei 8.212/91 - Seguro de Acidente de Trabalho (1%, 2% ou 3%) multiplicado pelo FAP" 
+                    />
+                    <RateInput 
+                      label="Salário Educação" 
+                      rateKey="m2_2_salary_education" 
+                      desc="Art. 3º do Decreto 87.043/82 - Contribuição de 2,5% para financiamento da educação básica" 
+                    />
+                    <RateInput 
+                      label="SESC / SESI" 
+                      rateKey="m2_2_sesc" 
+                      desc="Art. 30 da Lei 8.036/90 - Contribuição de 1,5% para serviços sociais (comércio/indústria)" 
+                    />
+                    <RateInput 
+                      label="SENAC / SENAI" 
+                      rateKey="m2_2_senac" 
+                      desc="Decreto-Lei 9.403/46 - Contribuição de 1,0% para aprendizagem profissional" 
+                    />
+                    <RateInput 
+                      label="SEBRAE" 
+                      rateKey="m2_2_sebrae" 
+                      desc="Lei 8.029/90 e Lei 10.668/03 - Contribuição de 0,6% para apoio às micro e pequenas empresas" 
+                    />
+                    <RateInput 
+                      label="INCRA" 
+                      rateKey="m2_2_incra" 
+                      desc="Decreto-Lei 1.146/70 - Contribuição de 0,2% para reforma agrária e colonização" 
+                    />
                   </div>
                   <div className="flex items-start gap-2 mt-4 p-3 bg-slate-50 rounded border border-slate-100">
                     <AlertCircle className="w-4 h-4 text-slate-400 mt-0.5" />
@@ -223,16 +267,32 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
                 <div>
                   <h4 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Aviso Prévio Indenizado</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <RateInput label="Provisão Mensal (API)" rateKey="m3_notice_indemnified" desc="Baseado na rotatividade anual" />
-                    <RateInput label="Multa FGTS (sobre API)" rateKey="m3_fine_fgts_indemnified" desc="Indenização compensatória (40% ou 50%)" />
+                    <RateInput 
+                      label="Provisão Mensal (API)" 
+                      rateKey="m3_notice_indemnified" 
+                      desc="Art. 487, §1º da CLT - Provisão mensal calculada com base no índice de rotatividade da empresa" 
+                    />
+                    <RateInput 
+                      label="Multa FGTS (sobre API)" 
+                      rateKey="m3_fine_fgts_indemnified" 
+                      desc="Art. 18, §1º da Lei 8.036/90 - Multa de 40% (ou 50% conf. LC 110/01) sobre saldo do FGTS na demissão sem justa causa" 
+                    />
                   </div>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Aviso Prévio Trabalhado</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <RateInput label="Provisão Mensal (APT)" rateKey="m3_notice_worked" desc="Baseado na rotatividade anual" />
-                    <RateInput label="Multa FGTS (sobre APT)" rateKey="m3_fine_fgts_worked" desc="Indenização compensatória" />
+                    <RateInput 
+                      label="Provisão Mensal (APT)" 
+                      rateKey="m3_notice_worked" 
+                      desc="Art. 487 da CLT e Lei 12.506/11 - Provisão para aviso trabalhado (30 dias + 3 dias/ano até 90 dias)" 
+                    />
+                    <RateInput 
+                      label="Multa FGTS (sobre APT)" 
+                      rateKey="m3_fine_fgts_worked" 
+                      desc="Art. 18, §1º da Lei 8.036/90 - Multa de 40% sobre depósitos do FGTS durante o aviso prévio trabalhado" 
+                    />
                   </div>
                 </div>
               </div>
@@ -249,12 +309,36 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
                 <div>
                   <h4 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Submódulo 4.1 - Ausências Legais</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <RateInput label="Cobertura de Férias" rateKey="m4_vacation_replace" desc="Substituto nas férias do titular" />
-                    <RateInput label="Ausências Legais" rateKey="m4_absences_legal" desc="Faltas justificadas (CLT)" />
-                    <RateInput label="Ausência por Doença" rateKey="m4_sickness" desc="Atestados médicos até 15 dias" />
-                    <RateInput label="Licença Paternidade" rateKey="m4_paternity" />
-                    <RateInput label="Licença Maternidade" rateKey="m4_maternity" />
-                    <RateInput label="Acidente de Trabalho" rateKey="m4_accident" />
+                    <RateInput 
+                      label="Cobertura de Férias" 
+                      rateKey="m4_vacation_replace" 
+                      desc="Art. 129 e 130 da CLT - Custo do substituto durante 30 dias de férias do titular (aprox. 9,075%)" 
+                    />
+                    <RateInput 
+                      label="Ausências Legais" 
+                      rateKey="m4_absences_legal" 
+                      desc="Art. 473 da CLT - Faltas justificadas (casamento, luto, doação sangue, alistamento, etc.)" 
+                    />
+                    <RateInput 
+                      label="Ausência por Doença" 
+                      rateKey="m4_sickness" 
+                      desc="Art. 60, §3º da Lei 8.213/91 - Afastamento por doença até 15 dias pagos pelo empregador" 
+                    />
+                    <RateInput 
+                      label="Licença Paternidade" 
+                      rateKey="m4_paternity" 
+                      desc="Art. 7º, XIX da CF/88 e Art. 10, §1º do ADCT - Licença de 5 dias corridos" 
+                    />
+                    <RateInput 
+                      label="Licença Maternidade" 
+                      rateKey="m4_maternity" 
+                      desc="Art. 7º, XVIII da CF/88 - Licença de 120 dias (prorrogável para 180 dias) sem ônus ao empregador" 
+                    />
+                    <RateInput 
+                      label="Acidente de Trabalho" 
+                      rateKey="m4_accident" 
+                      desc="Art. 60 da Lei 8.213/91 - Afastamento por acidente até 15 dias pagos pelo empregador" 
+                    />
                   </div>
                 </div>
               </div>
@@ -265,21 +349,41 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = ({ params, se
                  <div>
                   <h4 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Custos Indiretos e Lucro</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <RateInput label="Custos Indiretos" rateKey="m6_indirect_costs" desc="Despesas administrativas e operacionais" />
-                    <RateInput label="Lucro" rateKey="m6_profit" desc="Margem de lucro da empresa" />
+                    <RateInput 
+                      label="Custos Indiretos" 
+                      rateKey="m6_indirect_costs" 
+                      desc="IN SLTI/MP 02/2008, Anexo I-A - Despesas operacionais, administrativas e gerenciais (máx. 3% orientativo)" 
+                    />
+                    <RateInput 
+                      label="Lucro" 
+                      rateKey="m6_profit" 
+                      desc="IN SLTI/MP 02/2008, Anexo I-A - Remuneração do capital e margem de ganho da empresa contratada" 
+                    />
                   </div>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Tributos sobre Faturamento</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <RateInput label="PIS" rateKey="m6_pis" desc="Programa de Integração Social" />
-                    <RateInput label="COFINS" rateKey="m6_cofins" desc="Financiamento da Seguridade Social" />
-                    <RateInput label="ISS" rateKey="m6_iss" desc="Imposto Sobre Serviços (Municipal)" />
+                    <RateInput 
+                      label="PIS" 
+                      rateKey="m6_pis" 
+                      desc="Lei 10.637/02 (não-cumulativo: 1,65%) ou Lei 9.718/98 (cumulativo: 0,65%) - Contribuição social sobre faturamento" 
+                    />
+                    <RateInput 
+                      label="COFINS" 
+                      rateKey="m6_cofins" 
+                      desc="Lei 10.833/03 (não-cumulativo: 7,6%) ou Lei 9.718/98 (cumulativo: 3,0%) - Financiamento da Seguridade Social" 
+                    />
+                    <RateInput 
+                      label="ISS" 
+                      rateKey="m6_iss" 
+                      desc="LC 116/03 e Legislação Municipal - Imposto sobre serviços (varia conforme município, geralmente 2% a 5%)" 
+                    />
                   </div>
                   <div className="mt-4 p-3 bg-red-50 border border-red-100 rounded text-xs text-red-600 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" />
-                    <strong>Atenção:</strong> IRPJ e CSLL não compõem a planilha de custos da Administração Pública (Acórdão TCU 648/2016).
+                    <strong>Atenção:</strong> IRPJ e CSLL não compõem a planilha de custos da Administração Pública (Acórdão TCU 648/2016 - Plenário).
                   </div>
                 </div>
               </div>

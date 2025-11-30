@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, ChevronDown, ChevronUp, FileSpreadsheet, FileText } from 'lucide-react';
 import { GlobalResult, CalculationResult, ModuleCost } from '../types';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { exportToExcel } from '../services/excelExport';
+import { exportToPDF } from '../services/pdfExport';
 
 interface ResultsDisplayProps {
   data: GlobalResult;
@@ -32,6 +34,14 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ data }) => {
     document.body.removeChild(link);
   };
 
+  const handleDownloadExcel = () => {
+    exportToExcel(data);
+  };
+
+  const handleDownloadPDF = () => {
+    exportToPDF(data);
+  };
+
   return (
     <div className="space-y-8 animate-fade-in-up">
       
@@ -52,14 +62,31 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ data }) => {
 
       {/* Detailed Breakdown Per Service */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 flex-wrap gap-3">
           <h2 className="text-lg font-semibold text-slate-800">Detalhamento por Posto</h2>
-          <button 
-            onClick={handleDownloadJSON}
-            className="flex items-center gap-2 text-sm text-blue-600 font-medium hover:bg-blue-50 px-3 py-1.5 rounded transition-colors"
-          >
-            <Download className="w-4 h-4" /> Exportar JSON
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button 
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 text-sm text-white bg-red-600 hover:bg-red-700 font-medium px-3 py-1.5 rounded transition-colors shadow-sm"
+              title="Exportar para PDF"
+            >
+              <FileText className="w-4 h-4" /> PDF
+            </button>
+            <button 
+              onClick={handleDownloadExcel}
+              className="flex items-center gap-2 text-sm text-white bg-green-600 hover:bg-green-700 font-medium px-3 py-1.5 rounded transition-colors shadow-sm"
+              title="Exportar para Excel"
+            >
+              <FileSpreadsheet className="w-4 h-4" /> Excel
+            </button>
+            <button 
+              onClick={handleDownloadJSON}
+              className="flex items-center gap-2 text-sm text-blue-600 font-medium hover:bg-blue-50 px-3 py-1.5 rounded transition-colors border border-blue-200"
+              title="Exportar dados JSON"
+            >
+              <Download className="w-4 h-4" /> JSON
+            </button>
+          </div>
         </div>
 
         <div className="divide-y divide-slate-100">

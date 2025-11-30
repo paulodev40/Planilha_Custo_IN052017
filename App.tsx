@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { InputSection } from './components/InputSection';
 import { ResultsDisplay } from './components/ResultsDisplay';
@@ -6,23 +6,27 @@ import { ConfigurationPage } from './components/ConfigurationPage';
 import { INITIAL_PARAMS } from './constants';
 import { calculateGlobal } from './services/calculator';
 import { ServiceInput, GlobalParams } from './types';
+import { useLocalStorage } from './hooks/useLocalStorage';
+
+const INITIAL_SERVICES: ServiceInput[] = [
+  {
+    id: '1',
+    name: 'Servente de Limpeza 44h',
+    employeeCount: 2,
+    baseSalary: 1412.00,
+    hazardLevel: 0.20, // 20%
+    nightShiftUnhealthy: 0,
+    benefitsMonthly: 550.00, // VA + VT
+    suppliesMonthly: 120.00
+  }
+];
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'calculator' | 'config'>('calculator');
-  const [globalParams, setGlobalParams] = useState<GlobalParams>(INITIAL_PARAMS);
   
-  const [services, setServices] = useState<ServiceInput[]>([
-    {
-      id: '1',
-      name: 'Servente de Limpeza 44h',
-      employeeCount: 2,
-      baseSalary: 1412.00,
-      hazardLevel: 0.20, // 20%
-      nightShiftUnhealthy: 0,
-      benefitsMonthly: 550.00, // VA + VT
-      suppliesMonthly: 120.00
-    }
-  ]);
+  // Use localStorage for persistence
+  const [globalParams, setGlobalParams] = useLocalStorage<GlobalParams>('planilha-params', INITIAL_PARAMS);
+  const [services, setServices] = useLocalStorage<ServiceInput[]>('planilha-services', INITIAL_SERVICES);
 
   // Real-time calculation
   const results = useMemo(() => {
